@@ -11,4 +11,9 @@ class KustomerNativePlugin {
   Future<String?> getPlatformVersion() {
     return KustomerNativePluginPlatform.instance.getPlatformVersion();
   }
+
+  Future<String> configure(String apiKey) async {
+    print("___Success");
+    return await KustomerNativePluginPlatform.instance.configure(apiKey);
+  }
 }

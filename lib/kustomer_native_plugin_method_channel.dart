@@ -14,4 +14,14 @@ class MethodChannelKustomerNativePlugin extends KustomerNativePluginPlatform {
     final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
+
+  @override
+  Future<String> configure(String apiKey) async {
+    var params = <String, dynamic>{
+      "apiKey": apiKey
+    };
+    String result = await methodChannel.invokeMethod("configure", params);
+    return result;
+  }
+
 }

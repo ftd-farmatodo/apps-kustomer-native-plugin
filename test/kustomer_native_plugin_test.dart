@@ -10,6 +10,12 @@ class MockKustomerNativePluginPlatform
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+  
+  @override
+  Future<String> configure(String apiKey) {
+    // TODO: implement configure
+    throw UnimplementedError();
+  }
 }
 
 void main() {
