@@ -1,4 +1,4 @@
-package com.example.kustomerchat.ui.models
+package com.example.kustomer_native_plugin.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
@@ -10,21 +10,21 @@ import java.io.Serializable
  class User(
     @SerializedName("firstName")
     @Expose
-    val firstName: String = "",
+    val firstName: String? = "",
     @SerializedName("lastName")
     @Expose
-    val lastName: String = "",
+    val lastName: String? = "",
     @SerializedName("email")
     @Expose
      val email: String = "",
     @SerializedName("phone")
     @Expose
-    val phone: String = "",
+    val phone: String? = "",
     @SerializedName("token")
     @Expose
     val token: String = "",
     @SerializedName("documentNumber")
     @Expose
-    val documentNumber: String = "",
+    val documentNumber: String? = "",
 
  ): Serializable, Parcelable

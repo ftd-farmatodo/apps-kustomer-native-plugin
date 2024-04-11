@@ -4,7 +4,7 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=3.1.5 <4.0.0'
+  sdk: '>=3.0.5 <4.0.0'
   flutter: '>=3.3.0'
 
 dependencies:
@@ -39,8 +39,11 @@ flutter:
     # then add platforms following the instruction here:
     # https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms
     # -------------------
-      some_platform:
-        pluginClass: somePluginClass
+      android:
+        package: com.example.kustomer_native_plugin 
+        pluginClass: KustomerNativePlugin
+      ios:
+        pluginClass: KustomerNativePlugin
     # -------------------
 
   # To add assets to your plugin package, add an assets section, like this:

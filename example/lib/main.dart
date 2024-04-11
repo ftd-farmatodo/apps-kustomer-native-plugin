@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:kustomer_native_plugin/kustomer_native_plugin.dart';
+import 'package:kustomer_native_plugin/model/kustomer_config.dart';
+import 'package:kustomer_native_plugin/model/user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +20,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   final _kustomerNativePlugin = KustomerNativePlugin();
+  final KustomerConfig _kustomerConfig =  KustomerConfig(brandId: "6406563db1e150b1e83fc134", apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGY1YTdhZWFhY2VhMDcxMjhmZGY5NCIsInVzZXIiOiI2NWRmNWE3OTYyNjE1ODIxN2Y1ODlmNjUiLCJvcmciOiI2NDA2NTYyYTdhNmI4NmZkMjgyYmNhM2IiLCJvcmdOYW1lIjoienp6LWZhcm1hdG9kby1qZXNzeSIsInVzZXJUeXBlIjoibWFjaGluZSIsInBvZCI6InByb2QxIiwicm9sZXMiOlsib3JnLnRyYWNraW5nIl0sImF1ZCI6InVybjpjb25zdW1lciIsImlzcyI6InVybjphcGkiLCJzdWIiOiI2NWRmNWE3OTYyNjE1ODIxN2Y1ODlmNjUifQ.qt7Jr8lAIpYOFCLO3HVqUxFaiVmzV78trlY9-ak0huw");
+  final User user = User(email:"omar.paba@farmatodo.com", token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHRlcm5hbElkIjoiNTU3MzAyIiwiaWF0IjoxNzEwODU4NDAxLCJlbWFpbCI6Im9tYXIucGFiYUBmYXJtYXRvZG8uY29tIn0.f4Mq9QclwB1f5SdAH_-iuBL9TwKn90VuHSgU87LWPMo");
+  final String message = "Hola en que puedo ayudarte hoy?";
 
   @override
   void initState() {
@@ -55,7 +60,12 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: TextButton(
+            onPressed: () async {
+              await _kustomerNativePlugin.start(_kustomerConfig, user, message);
+            },
+            child: const Text('New Conversation'),
+          )
         ),
       ),
     );

@@ -1,3 +1,37 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.example.kustomer_native_plugin">
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--Required to take a picture and send as an attachment over chat-->
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+
+            <data android:mimeType="*/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+
+            <data android:mimeType="*/*" />
+        </intent>
+    </queries>
+    <application>
+        <activity
+            android:name=".activities.MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:exported="true"
+            >
+        </activity>
+    </application>
 </manifest>
