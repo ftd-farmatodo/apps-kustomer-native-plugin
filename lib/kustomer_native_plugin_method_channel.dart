@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:kustomer_native_plugin/model/conversation_input.dart';
+import 'package:kustomer_native_plugin/model/describe_customer.dart';
 import 'package:kustomer_native_plugin/model/kustomer_config.dart';
 import 'package:kustomer_native_plugin/model/user.dart';
 
@@ -18,11 +22,12 @@ class MethodChannelKustomerNativePlugin extends KustomerNativePluginPlatform {
   }
 
   @override
-  Future<String> start(KustomerConfig kustomerConfig,User user,String message) async {
-    var params = <String, dynamic>{
-      "kustomerConfigMap": kustomerConfig.toJson(),
-      "userMap": user.toJson(),
-      "message": message,
+  Future<String> start(KustomerConfig kustomerConfig,User user,ConversationInput? conversationInput,DescribeCustomer? describeCustomer) async {
+    var params = <String, String>{
+      "kustomerConfigMap": jsonEncode(kustomerConfig.toJson()),
+      "userMap": jsonEncode(user.toJson()),
+      "conversationInput": jsonEncode(conversationInput?.toJson()),
+      "describeCustomer": jsonEncode(describeCustomer?.toJson()),
     };
     String result = await methodChannel.invokeMethod('init',params);
     return result;

@@ -5,15 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.NonNull
 import androidx.core.content.ContextCompat.startActivity
 import com.example.kustomer_native_plugin.activities.MainActivity
+import com.example.kustomer_native_plugin.activities.MainActivity.Companion.CONVERSATIONINPUT
+import com.example.kustomer_native_plugin.activities.MainActivity.Companion.DESCRIBECUSTOMER
 import com.example.kustomer_native_plugin.activities.MainActivity.Companion.KUSTOMERCONFIGMAP
-import com.example.kustomer_native_plugin.activities.MainActivity.Companion.MESSAGE
 import com.example.kustomer_native_plugin.activities.MainActivity.Companion.USERMAP
-import com.example.kustomer_native_plugin.databinding.ActivityMainBinding
-import com.example.kustomer_native_plugin.models.KustomerConfig
-import com.example.kustomer_native_plugin.models.User
+
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -61,17 +59,21 @@ class KustomerNativePlugin: FlutterPlugin, MethodCallHandler,ActivityAware,Plugi
     if (call.method == "getPlatformVersion") {
       result.success("Android ${android.os.Build.VERSION.RELEASE}")
     }else if(call.method == "init" ){
-      val userMap = call.argument<HashMap<String, Any?>>(USERMAP)
-      val kustomerConfigMap = call.argument<HashMap<String, Any?>>(KUSTOMERCONFIGMAP)
-      val message = call.argument<String>(MESSAGE) ?: ""
+      val userMap = call.argument<String>(USERMAP)
+      val kustomerConfigMap = call.argument<String>(KUSTOMERCONFIGMAP)
+      val conversationInputData = call.argument<String>(CONVERSATIONINPUT)
+      val describeCustomerData = call.argument<String>(DESCRIBECUSTOMER)
 
       this.activity?.let {
 
         val intent = Intent(it, MainActivity::class.java)
         val bundle = Bundle()
         bundle.putSerializable(USERMAP, userMap.toString())
-        bundle.putString(MESSAGE, message)
+        Log.i("MAP", kustomerConfigMap.toString())
+        Log.i("CONVERSATIONINPUT", conversationInputData.toString())
+        bundle.putSerializable(CONVERSATIONINPUT, conversationInputData.toString())
         bundle.putSerializable(KUSTOMERCONFIGMAP, kustomerConfigMap.toString())
+        bundle.putSerializable(DESCRIBECUSTOMER, describeCustomerData.toString())
         intent.putExtras(bundle)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(it.applicationContext,intent,null)

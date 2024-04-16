@@ -4,15 +4,21 @@ import android.app.Application
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.kustomer_native_plugin.models.ConversationInput
 import com.example.kustomer_native_plugin.models.User
+import com.kustomer.core.models.KusInitialMessage
+import com.kustomer.core.models.KusPreferredView
 import com.kustomer.core.models.KusResult
+import com.kustomer.core.models.chat.KusChatMessageDirection
 import com.kustomer.core.models.chat.KusCustomerDescribeAttributes
 import com.kustomer.core.utils.log.KusLogOptions
 import com.kustomer.ui.Kustomer
 import com.kustomer.ui.KustomerOptions
+import com.kustomer.ui.model.KusDescribeAttributes
+import java.util.HashMap
 import java.util.Locale
 
-class KustomerImpl(private val appContext : Application, private val api :String, private val user: User, private val brandId : String): ViewModel()  {
+class KustomerImpl(private val appContext : Application, private val api :String, private val brandId : String): ViewModel()  {
 
     init {
 
@@ -45,9 +51,34 @@ class KustomerImpl(private val appContext : Application, private val api :String
             }
 
     }
-    fun newConversation(intialMessage: String?) {
-        Kustomer.getInstance()
-            .openNewConversation(intialMessage)
+    fun newConversation(conversation: ConversationInput?) {
+        if(conversation?.initialMessage.isNullOrEmpty()){
+            Kustomer.getInstance().open(KusPreferredView.KB_ONLY)
+        }else{
+
+            Kustomer.getInstance()
+                .startNewConversation(
+                   /*title = conversation?.title,
+                     describeAttributes = KusDescribeAttributes(
+                        conversation?.map?: HashMap()
+                    ),*/
+                    initialMessage = KusInitialMessage(
+                        conversation?.initialMessage?:"",
+                        KusChatMessageDirection.CUSTOMER
+                    )
+                ) {
+                    when (it) {
+                        is KusResult.Success -> {
+                            it.data
+                        }
+                        is KusResult.Error -> {
+                            it.exception.localizedMessage
+                        }
+
+                        else -> {}
+                    }
+                }
+        }
     }
    private fun isLogged(user: User):Boolean?{
         return Kustomer.getInstance().isLoggedIn(userEmail = user.email).dataOrNull
@@ -65,7 +96,6 @@ class KustomerImpl(private val appContext : Application, private val api :String
     }
 
     fun describeConversation(conversationId:String,map:Map<String,Any>){
-
         Kustomer.getInstance()
             .describeConversation(conversationId,
                 map){

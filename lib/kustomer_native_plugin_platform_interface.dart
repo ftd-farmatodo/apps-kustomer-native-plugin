@@ -1,3 +1,5 @@
+import 'package:kustomer_native_plugin/model/conversation_input.dart';
+import 'package:kustomer_native_plugin/model/describe_customer.dart';
 import 'package:kustomer_native_plugin/model/kustomer_config.dart';
 import 'package:kustomer_native_plugin/model/user.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -28,7 +30,7 @@ abstract class KustomerNativePluginPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
-  Future<String> start(KustomerConfig kustomerConfig,User user,String message) async {
+  Future<String> start(KustomerConfig kustomerConfig,User user,ConversationInput? conversationInput,DescribeCustomer? describeCustomer) async {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }
