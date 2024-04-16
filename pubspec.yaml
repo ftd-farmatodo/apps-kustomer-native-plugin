@@ -39,9 +39,12 @@ flutter:
     # then add platforms following the instruction here:
     # https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms
     # -------------------
+<<<<<<< HEAD
       android:
         package: com.example.kustomer_native_plugin 
         pluginClass: KustomerNativePlugin
+=======
+>>>>>>> 0c0b616fc06fd1f9eb2724dfc48f0a8c139ab6c2
       ios:
         pluginClass: KustomerNativePlugin
     # -------------------
