@@ -16,15 +16,12 @@ class KustomerNativePlugin {
   Future<String?> getPlatformVersion() {
     return KustomerNativePluginPlatform.instance.getPlatformVersion();
   }
-<<<<<<< HEAD
    Future<String?> start(KustomerConfig kustomerConfig,User user,ConversationInput? conversationInput,DescribeCustomer? describeCustomer) async {
     return await KustomerNativePluginPlatform.instance
         .start(kustomerConfig, user, conversationInput,describeCustomer);
-=======
-
+   }
   Future<String> configure(String apiKey) async {
     print("___Success");
     return await KustomerNativePluginPlatform.instance.configure(apiKey);
->>>>>>> 0c0b616fc06fd1f9eb2724dfc48f0a8c139ab6c2
   }
 }

@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   final User user = User(email:"omar.paba@farmatodo.com", token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHRlcm5hbElkIjoiNTU3MzAyIiwiaWF0IjoxNzEzMjcwMjAwLCJlbWFpbCI6Im9tYXIucGFiYUBmYXJtYXRvZG8uY29tIn0.1f1c0XBGuOViyfuDw8c8U5IVJLyGRgcm7Zl1BczWmkI");
   
   //Los datos de la conversación se utilizan para iniciar una conversación con la plataforma de Kustomer. El mensaje inicial es el mensaje que se envía al iniciar la conversación.Si no se envia mensaje  lleva a la pantalla principal de la plataforma de Kustomer. El título es el título de la conversación y el mapa es un mapa de datos que se envía a la plataforma de Kustomer.
-  final ConversationInput conversationInput = ConversationInput(initialMessage:null,title: 'Example', map: {"property":"value"});
+  final ConversationInput conversationInput = ConversationInput(initialMessage:'Necesito ayuda con mi orden #349123',title: 'Example', map: {"property":"value"});
   
   //Los datos del cliente se utilizan para describir al cliente en la plataforma de Kustomer. El email es el email del cliente, el teléfono es el teléfono del cliente y el custom es un mapa de datos que se envía a la plataforma de Kustomer.
   final DescribeCustomer describeCustomer = DescribeCustomer(email: "omar.paba@farmatodo.com",phone: '23412341235', custom: {"property":"value"});
