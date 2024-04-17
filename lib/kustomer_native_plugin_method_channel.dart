@@ -32,6 +32,14 @@ class MethodChannelKustomerNativePlugin extends KustomerNativePluginPlatform {
     String result = await methodChannel.invokeMethod('init',params);
     return result;
   }
+   @override
+  Future<String> logOut(KustomerConfig kustomerConfig) async {
+    var params = <String, String>{
+      "kustomerConfigMap": jsonEncode(kustomerConfig.toJson()),
+    };
+    String result = await methodChannel.invokeMethod('logOut',params);
+    return result;
+  }
   Future<String> configure(String apiKey) async {
     var params = <String, dynamic>{
       "apiKey": apiKey

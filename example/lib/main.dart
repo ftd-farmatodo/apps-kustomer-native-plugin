@@ -71,11 +71,21 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: TextButton(
-            onPressed: () async {
-              await _kustomerNativePlugin.start(_kustomerConfig, user, conversationInput,describeCustomer);
-            },
-            child: const Text('New Conversation'),
+          child: Column(
+            children: [
+              TextButton(
+                onPressed: () async {
+                  await _kustomerNativePlugin.start(_kustomerConfig, user, conversationInput,describeCustomer);
+                },
+                child: const Text('New Conversation'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await _kustomerNativePlugin.logOut(_kustomerConfig);
+                },
+                child: const Text('Log Out'),
+              )
+            ],
           )
         ),
       ),

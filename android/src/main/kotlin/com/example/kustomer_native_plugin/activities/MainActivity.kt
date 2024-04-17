@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         const val USERMAP = "userMap"
         const val DESCRIBECUSTOMER = "describeCustomer"
         const val CONVERSATIONINPUT = "conversationInput"
+        const val LOGOUT = "logout"
 
 
     }
@@ -54,6 +55,10 @@ class MainActivity : AppCompatActivity() {
         val userMap = intent.getStringExtra(USERMAP)
         val kustomerConfigMap = intent.getStringExtra(KUSTOMERCONFIGMAP)
         val describeCustomerData = intent.getStringExtra(DESCRIBECUSTOMER)
+        val logOut = intent.getBooleanExtra(LOGOUT,false)
+        if(logOut){
+            kustomer.logout()
+        }
 
         try {
             val userJson = object : TypeToken<User>() {}.getType()

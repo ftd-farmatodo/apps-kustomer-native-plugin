@@ -20,6 +20,10 @@ class KustomerNativePlugin {
     return await KustomerNativePluginPlatform.instance
         .start(kustomerConfig, user, conversationInput,describeCustomer);
    }
+    Future<String> logOut(KustomerConfig kustomerConfig) async {
+      return await KustomerNativePluginPlatform.instance.logOut(kustomerConfig);
+    }
+
   Future<String> configure(String apiKey) async {
     print("___Success");
     return await KustomerNativePluginPlatform.instance.configure(apiKey);

@@ -14,16 +14,14 @@ import com.kustomer.core.models.chat.KusCustomerDescribeAttributes
 import com.kustomer.core.utils.log.KusLogOptions
 import com.kustomer.ui.Kustomer
 import com.kustomer.ui.KustomerOptions
-import com.kustomer.ui.model.KusDescribeAttributes
-import java.util.HashMap
 import java.util.Locale
 
 class KustomerImpl(private val appContext : Application, private val api :String, private val brandId : String): ViewModel()  {
 
     init {
-
         setup()
     }
+
    fun setup(){
        val options = KustomerOptions.Builder()
            .setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE")
@@ -105,6 +103,9 @@ class KustomerImpl(private val appContext : Application, private val api :String
                     else -> {}
                 }
             }
+    }
+    fun  logout(){
+        Kustomer.getInstance().logOut()
     }
 
 }
