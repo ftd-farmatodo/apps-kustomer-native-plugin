@@ -20,10 +20,10 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
       guard let args = call.arguments as? Dictionary<String, Any>,
             let apiKey = args["apiKey"] as? String,
             let brandId = args["brandId"] as? String,
+            let phone = args["phone"] as? String,
             let email = args["email"] as? String, 
             let token = args["token"] as? String,
             let initialMessage = args["initialMessage"] as? String?,
-            let phone = args["phone"] as? String,
             let conversationId = args["conversationId"] as? String  else { return }
 
       let options = KustomerOptions()
