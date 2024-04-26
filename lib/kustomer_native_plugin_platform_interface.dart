@@ -30,14 +30,16 @@ abstract class KustomerNativePluginPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   Future<String> start(KustomerConfig kustomerConfig,User user,ConversationInput? conversationInput,DescribeCustomer? describeCustomer) async {
      throw UnimplementedError('platformVersion() has not been implemented.');
   }
+  
   Future<String> logOut(KustomerConfig kustomerConfig) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<String> configure(String apiKey) {
+  Future<String> configure(String apiKey, String brandId, String email, String token, String? initialMessage) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }

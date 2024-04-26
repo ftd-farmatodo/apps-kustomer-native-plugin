@@ -16,16 +16,17 @@ class KustomerNativePlugin {
   Future<String?> getPlatformVersion() {
     return KustomerNativePluginPlatform.instance.getPlatformVersion();
   }
-   Future<String?> start(KustomerConfig kustomerConfig,User user,ConversationInput? conversationInput,DescribeCustomer? describeCustomer) async {
+  
+  Future<String?> start(KustomerConfig kustomerConfig,User user,ConversationInput? conversationInput,DescribeCustomer? describeCustomer) async {
     return await KustomerNativePluginPlatform.instance
         .start(kustomerConfig, user, conversationInput,describeCustomer);
    }
-    Future<String> logOut(KustomerConfig kustomerConfig) async {
-      return await KustomerNativePluginPlatform.instance.logOut(kustomerConfig);
-    }
+  
+  Future<String> logOut(KustomerConfig kustomerConfig) async {
+    return await KustomerNativePluginPlatform.instance.logOut(kustomerConfig);
+  }
 
-  Future<String> configure(String apiKey) async {
-    print("___Success");
-    return await KustomerNativePluginPlatform.instance.configure(apiKey);
+  Future<String> configure(String apiKey, String brandId, String email, String token, String? initialMessage) async {
+    return await KustomerNativePluginPlatform.instance.configure(apiKey, brandId, email, token, initialMessage);
   }
 }
