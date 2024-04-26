@@ -22,7 +22,9 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
             let brandId = args["brandId"] as? String,
             let email = args["email"] as? String, 
             let token = args["token"] as? String,
-            let initialMessage = args["initialMessage"] as? String? else { return }
+            let initialMessage = args["initialMessage"] as? String?,
+            let phone = args["phone"] as? String,
+            let conversationId = args["conversationId"] as? String  else { return }
 
       let options = KustomerOptions()
       options.activeAssistant = .orgDefault
@@ -31,7 +33,9 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
 
       Kustomer.configure(apiKey: apiKey, options: options, launchOptions: nil)
       logIn(email: email, token: token)
+      describeCustomer(phone: phone, email: email)
       startNewConversation(initialMessage: initialMessage)
+      describeConversation(conversationId: conversationId, phone: phone, email: email)
 
     case "logOut":
       Kustomer.logOut({ error in
@@ -49,10 +53,10 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
     if !userIsLoggedIn(email: email) {
       Kustomer.logIn(jwt: token) { result in
         switch result {
-        case .success:
-          print("Login success")
-        case .failure(let error):
-          print("There was a problem \(error.localizedDescription)")
+          case .success:
+            print("Login success")
+          case .failure(let error):
+            print("There was a problem \(error.localizedDescription)")
         }
       }
     }
@@ -60,6 +64,32 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
 
   private func userIsLoggedIn(email: String) -> Bool {
     return Kustomer.isLoggedIn(userEmail: email, userId: nil)
+  }
+
+  private func describeCustomer(phone: String, email: String) {
+    Kustomer.chatProvider.describeCurrentCustomer(phone: phone, email: email) { result in
+      switch result {
+        case .success:
+          print("Customer described")
+        case .failure(let error):
+          print(error.localizedDescription)
+      }
+    }
+  }
+
+  private func describeConversation(conversationId: String, phone: String, email: String) {
+    var attributes = [String:Any]()
+    attributes["phone"] = phone
+    attributes["email"] = email
+
+    Kustomer.chatProvider.describeConversation(conversationId: conversationId, attributes: attributes) { result in
+      switch result {
+        case .success:
+          print("Conversation described")
+        case .failure(let error):
+          print(error.localizedDescription)
+      }
+    }
   }
 
   private func startNewConversation(initialMessage: String?) {

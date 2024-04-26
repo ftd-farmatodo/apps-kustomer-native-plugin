@@ -22,7 +22,7 @@ class MethodChannelKustomerNativePlugin extends KustomerNativePluginPlatform {
   }
 
   @override
-  Future<String> start(KustomerConfig kustomerConfig,User user,ConversationInput? conversationInput,DescribeCustomer? describeCustomer) async {
+  Future<String> start(KustomerConfig kustomerConfig, User user, ConversationInput? conversationInput, DescribeCustomer? describeCustomer) async {
     var params = <String, String>{
       "kustomerConfigMap": jsonEncode(kustomerConfig.toJson()),
       "userMap": jsonEncode(user.toJson()),
@@ -43,13 +43,15 @@ class MethodChannelKustomerNativePlugin extends KustomerNativePluginPlatform {
   }
 
   @override
-  Future<String> configure(String apiKey, String brandId, String email, String token, String? initialMessage) async {
+  Future<String> configure(String apiKey, String brandId, String phone, String email, String token, String? initialMessage, String conversationId) async {
     var params = <String, dynamic>{
       "apiKey": apiKey,
       "brandId": brandId,
+      "phone": phone,
       "email": email,
       "token": token,
-      "initialMessage": initialMessage
+      "initialMessage": initialMessage,
+      "conversationId": conversationId
     };
     String result = await methodChannel.invokeMethod("configure", params);
     return result;

@@ -16,7 +16,7 @@ class MockKustomerNativePluginPlatform
   Future<String?> getPlatformVersion() => Future.value('42');
   
   @override
-  Future<String> configure(String apiKey, String brandId, String email, String token, String? initialMessage) {
+  Future<String> configure(String apiKey, String brandId, String phone, String email, String token, String? initialMessage, String conversationId) {
     throw UnimplementedError();
   }
 
