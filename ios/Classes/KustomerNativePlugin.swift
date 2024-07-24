@@ -2,8 +2,26 @@ import Flutter
 import UIKit
 import KustomerChat
 
+enum KustomerEvents {
+  case start
+  case newConversation
+  case openChat
+  case logOut
+
+  var name: String {
+    switch self {
+      case .start: return "start"
+      case .newConversation: return "newConversation"
+      case .openChat: return "openChat"
+      case .logOut: return "logOut"
+    }
+  }
+}
+
 public class KustomerNativePlugin: NSObject, FlutterPlugin {
   var rootViewController: UIViewController!
+
+  var configuration: KustomerConfiguration?
 
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "kustomer_native_plugin", binaryMessenger: registrar.messenger())
@@ -13,31 +31,25 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     switch call.method {
-    case "getPlatformVersion":
-      result("iOS " + UIDevice.current.systemVersion)
 
-    case "configure":
-      guard let args = call.arguments as? Dictionary<String, Any>,
-            let apiKey = args["apiKey"] as? String,
-            let brandId = args["brandId"] as? String,
-            let phone = args["phone"] as? String,
-            let email = args["email"] as? String, 
-            let token = args["token"] as? String,
-            let initialMessage = args["initialMessage"] as? String?,
-            let conversationId = args["conversationId"] as? String  else { return }
+    case KustomerEvents.start.name:
+      guard let args = call.arguments as? Dictionary<String, Any> else { return }
+      configuration = KustomerConfiguration(args: args)
+      configureKustomer(result: result)
+      
+    case KustomerEvents.newConversation.name:
+      guard let configuration = self.configuration else { return }
+      startNewConversation(
+        initialMessage: configuration.initialMessage,
+        phone: configuration.phone,
+        email: configuration.email
+      )
 
-      let options = KustomerOptions()
-      options.activeAssistant = .orgDefault
-      options.brandId = brandId
-      options.hideNewConversationButtonInClosedChat = true
+    case KustomerEvents.openChat.name:
+      guard let configuration = self.configuration else { return }
+      openChat()
 
-      Kustomer.configure(apiKey: apiKey, options: options, launchOptions: nil)
-      logIn(email: email, token: token)
-      describeCustomer(phone: phone, email: email)
-      startNewConversation(initialMessage: initialMessage)
-      describeConversation(conversationId: conversationId, phone: phone, email: email)
-
-    case "logOut":
+    case KustomerEvents.logOut.name:
       Kustomer.logOut({ error in
         if error != nil {
          print("There was a problem \(error?.localizedDescription ?? "")")
@@ -48,17 +60,37 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
       result(FlutterMethodNotImplemented)
     }
   }
+}
 
-  private func logIn(email: String, token: String) {
+// MARK: - Private KustomerNativePlugin extension
+extension KustomerNativePlugin {
+
+  private func configureKustomer(result: @escaping FlutterResult){
+    guard let configuration = self.configuration else { return }
+
+    let options = KustomerOptions()
+    options.brandId = configuration.brandId
+    options.activeAssistant = .orgDefault
+    options.hideNewConversationButtonInClosedChat = false
+
+    Kustomer.configure(apiKey: configuration.apiKey, options: options, launchOptions: nil)
+
+    if let email = configuration.email, let token = configuration.token {
+      logIn(email: email, token: token, result: result)
+      describeCustomer(phone: configuration.phone, email: email)
+    }
+  }
+
+  private func logIn(email: String, token: String, result: @escaping FlutterResult) {
     if !userIsLoggedIn(email: email) {
-      Kustomer.logIn(jwt: token) { result in
-        switch result {
-          case .success:
-            print("Login success")
-          case .failure(let error):
-            print("There was a problem \(error.localizedDescription)")
+      Kustomer.logIn(jwt: token) { r in
+        switch r {
+          case .success: result(true)
+          case .failure(let error): result(false)
         }
       }
+    } else {
+      result(true)
     }
   }
 
@@ -66,7 +98,7 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
     return Kustomer.isLoggedIn(userEmail: email, userId: nil)
   }
 
-  private func describeCustomer(phone: String, email: String) {
+  private func describeCustomer(phone: String?, email: String?) {
     Kustomer.chatProvider.describeCurrentCustomer(phone: phone, email: email) { result in
       switch result {
         case .success:
@@ -77,11 +109,27 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
     }
   }
 
-  private func describeConversation(conversationId: String, phone: String, email: String) {
+  private func openChat() {
+    Kustomer.show(preferredView: .chatHistory)
+  }
+
+  private func startNewConversation(initialMessage: String?, phone: String?, email: String?) {
+    if let safeInitialMessage = initialMessage {
+      Kustomer.startNewConversation(initialMessage: KUSInitialMessage(body: safeInitialMessage, direction: .user), afterCreateConversation: { conversation in
+        print("New conversation created. Conversation id is \(conversation.id ?? "")")
+        self.describeConversation(conversationId: conversation.id, phone: phone, email: email)
+      }, animated: true)
+    } else {
+        Kustomer.show()
+    }
+  }
+
+  func describeConversation(conversationId: String?, phone: String?, email: String?) {
     var attributes = [String:Any]()
     attributes["phone"] = phone
     attributes["email"] = email
 
+    guard let conversationId = conversationId else { return }
     Kustomer.chatProvider.describeConversation(conversationId: conversationId, attributes: attributes) { result in
       switch result {
         case .success:
@@ -89,15 +137,6 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
         case .failure(let error):
           print(error.localizedDescription)
       }
-    }
-  }
-
-  private func startNewConversation(initialMessage: String?) {
-    if let safeInitialMessage = initialMessage {
-      Kustomer.startNewConversation(initialMessage: KUSInitialMessage(body: safeInitialMessage, direction: .user), afterCreateConversation: { conversation in
-        print("New conversation created. Conversation id is \(conversation.id ?? "")") }, animated: true)
-    } else {
-        Kustomer.show()
     }
   }
 }

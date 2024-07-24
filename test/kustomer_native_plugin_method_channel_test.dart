@@ -1,11 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:kustomer_native_plugin/kustomer_native_plugin_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelKustomerNativePlugin platform = MethodChannelKustomerNativePlugin();
   const MethodChannel channel = MethodChannel('kustomer_native_plugin');
 
   setUp(() {
@@ -19,9 +17,5 @@ void main() {
 
   tearDown(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
-  });
-
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
   });
 }
