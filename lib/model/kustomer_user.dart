@@ -1,5 +1,5 @@
 class KustomerUser {
-    String token;
+    final String token;
     String? email;
     String? firstName;
     String? lastName;
@@ -15,7 +15,7 @@ class KustomerUser {
     this.documentNumber,
   });
 
-  KustomerUser.annonimousUser({
+  KustomerUser.anonymousUser({
     this.token = '',
   });
 

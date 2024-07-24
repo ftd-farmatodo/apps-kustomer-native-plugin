@@ -57,7 +57,7 @@ public class KustomerNativePlugin: NSObject, FlutterPlugin {
       })
 
     default:
-      result(FlutterMethodNotImplemented)
+      result(FlutterError(code: "UNIMPLEMENTED", message: "Method \(call.method) not implemented", details: nil))
     }
   }
 }
@@ -104,7 +104,7 @@ extension KustomerNativePlugin {
         case .success:
           print("Customer described")
         case .failure(let error):
-          print(error.localizedDescription)
+          print("Failed to describe conversation: \(error.localizedDescription)")
       }
     }
   }

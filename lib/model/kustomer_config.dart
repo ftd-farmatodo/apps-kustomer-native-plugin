@@ -17,5 +17,7 @@ class KustomerConfig {
   Map<String, dynamic> toJson() => {
         'brandId': brandId,
         'apiKey': apiKey,
+        'user': user?.toJson(),
+        'conversationInput': conversationInput?.toJson(),
       };
 }
