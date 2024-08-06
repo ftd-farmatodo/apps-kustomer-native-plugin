@@ -19,7 +19,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final kustomer = Kustomer();
 
-
   //TODO: Para sacar el token de KustomerUser -> user.token se debe llamar la siguiente API.
 
 /*
@@ -39,19 +38,21 @@ class _MyAppState extends State<MyApp> {
     email -> Correo del usuario en FARMATODO
 
 */
-  
+
   //Los datos de configuración de Kustomer se utilizan para configurar la plataforma de Kustomer. El brandId es el id de la marca en la plataforma de Kustomer y el apiKey es la clave de la API de la plataforma de Kustomer.
   final KustomerConfig _kustomerConfig = KustomerConfig(
     brandId: "6523ffeabe7cea70f42cc6fc",
-    apiKey: "eyJhbGciOiJub25lIn0.eyJvcmciOiI2NTIzZmZlNjU5MWU4NjM0MGI2N2RkYjEiLCJvcmdOYW1lIjoiZmFybWF0b2RvIiwicm9sZXMiOlsib3JnLnRyYWNraW5nIl19.", // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTAwZmRlY2U5MjBiYjUxM2M3ODQ4MCIsInVzZXIiOiI2NmEwMGZkZGVlNmQzYTNkY2I5YWVkZGEiLCJvcmciOiI2NTIzZmZlNjU5MWU4NjM0MGI2N2RkYjEiLCJvcmdOYW1lIjoiZmFybWF0b2RvIiwidXNlclR5cGUiOiJtYWNoaW5lIiwicG9kIjoicHJvZDEiLCJyb2xlcyI6WyJvcmcudHJhY2tpbmciXSwiYXVkIjoidXJuOmNvbnN1bWVyIiwiaXNzIjoidXJuOmFwaSIsInN1YiI6IjY2YTAwZmRkZWU2ZDNhM2RjYjlhZWRkYSJ9.jO2AjreNGkGWV2pdvNsxHLkbzGZtynjdfsYvnip6WHc",
+    apiKey:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTAwZmRlY2U5MjBiYjUxM2M3ODQ4MCIsInVzZXIiOiI2NmEwMGZkZGVlNmQzYTNkY2I5YWVkZGEiLCJvcmciOiI2NTIzZmZlNjU5MWU4NjM0MGI2N2RkYjEiLCJvcmdOYW1lIjoiZmFybWF0b2RvIiwidXNlclR5cGUiOiJtYWNoaW5lIiwicG9kIjoicHJvZDEiLCJyb2xlcyI6WyJvcmcudHJhY2tpbmciXSwiYXVkIjoidXJuOmNvbnN1bWVyIiwiaXNzIjoidXJuOmFwaSIsInN1YiI6IjY2YTAwZmRkZWU2ZDNhM2RjYjlhZWRkYSJ9.jO2AjreNGkGWV2pdvNsxHLkbzGZtynjdfsYvnip6WHc", // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTAwZmRlY2U5MjBiYjUxM2M3ODQ4MCIsInVzZXIiOiI2NmEwMGZkZGVlNmQzYTNkY2I5YWVkZGEiLCJvcmciOiI2NTIzZmZlNjU5MWU4NjM0MGI2N2RkYjEiLCJvcmdOYW1lIjoiZmFybWF0b2RvIiwidXNlclR5cGUiOiJtYWNoaW5lIiwicG9kIjoicHJvZDEiLCJyb2xlcyI6WyJvcmcudHJhY2tpbmciXSwiYXVkIjoidXJuOmNvbnN1bWVyIiwiaXNzIjoidXJuOmFwaSIsInN1YiI6IjY2YTAwZmRkZWU2ZDNhM2RjYjlhZWRkYSJ9.jO2AjreNGkGWV2pdvNsxHLkbzGZtynjdfsYvnip6WHc",
     user: KustomerUser(
-      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHRlcm5hbElkIjoiMjY4MjI2IiwiaWF0IjoxNzIxODM0NzQ5LCJlbWFpbCI6ImRpZWdvZmNhLjA4QGdtYWlsLmNvbSJ9.ELsIOrbMYgXzFEM7yDkmQipyiybMQMp8YwoNlD88ztE",
-      email:"diegofca.08@gmail.com", 
+      token:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHRlcm5hbElkIjoiMjY4MjI2IiwiaWF0IjoxNzIyODg5NDg0LCJlbWFpbCI6ImRpZWdvZmNhLjA4QGdtYWlsLmNvbSJ9.InqUcYmkXYTKIKw55DdQiR_K3KYXZCF4motzs9g9wAk",
+      email: "diegofca.08@gmail.com",
       phone: '573114742370',
     ),
     //user: KustomerUser.annonimousUser(),
     conversationInput: ConversationInput(
-      initialMessage:'Nueva conversación',
+      initialMessage: 'Nueva conversación',
       title: 'Farmatodo',
     ),
   );
@@ -76,23 +77,22 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Column(
-            children: [
-              TextButton(
-                onPressed: () async {
-                  await kustomer.openChat();
-                },
-                child: const Text('Open Chat'),
-              ),
-              TextButton(
-                onPressed: () async {
-                  await kustomer.logOut(_kustomerConfig);
-                },
-                child: const Text('Log Out'),
-              )
-            ],
-          )
-        ),
+            child: Column(
+          children: [
+            TextButton(
+              onPressed: () async {
+                await kustomer.openChat();
+              },
+              child: const Text('Open Chat'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await kustomer.logOut(_kustomerConfig);
+              },
+              child: const Text('Log Out'),
+            )
+          ],
+        )),
       ),
     );
   }

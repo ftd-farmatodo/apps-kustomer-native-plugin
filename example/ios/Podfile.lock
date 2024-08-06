@@ -34,10 +34,10 @@ SPEC CHECKSUMS:
   Down: b6ba1bc985c9d2f4e15e3b293d2207766fa12612
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
-  kustomer_native_plugin: 616674760d10fef6e1bde5b14bf9082d0883e11b
+  kustomer_native_plugin: f53a814e4efb7fd6c8d40957817b872e7385b36e
   KustomerChat: ea221662dfc33e6f40678da33c8f1b58e5b843bf
   PubNubSwift: 08d33c3002cb8d3e8bf314cd1f973b3926ff88f2
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
