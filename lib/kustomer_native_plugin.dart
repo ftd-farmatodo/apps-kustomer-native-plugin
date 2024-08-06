@@ -5,28 +5,20 @@
 // platforms in the `pubspec.yaml` at
 // https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
 
-import 'package:kustomer_native_plugin/model/conversation_input.dart';
-import 'package:kustomer_native_plugin/model/describe_customer.dart';
 import 'package:kustomer_native_plugin/model/kustomer_config.dart';
-import 'package:kustomer_native_plugin/model/user.dart';
-
 import 'kustomer_native_plugin_platform_interface.dart';
 
-class KustomerNativePlugin {
-  Future<String?> getPlatformVersion() {
-    return KustomerNativePluginPlatform.instance.getPlatformVersion();
+class Kustomer {
+
+  Future<bool> start(KustomerConfig config) async {
+    return await KustomerNativePluginPlatform.instance.start(config);
   }
-  
-  Future<String?> start(KustomerConfig kustomerConfig, User user, ConversationInput? conversationInput, DescribeCustomer? describeCustomer) async {
-    return await KustomerNativePluginPlatform.instance
-        .start(kustomerConfig, user, conversationInput,describeCustomer);
-   }
+
+  Future<String?> openChat() async {
+    return await KustomerNativePluginPlatform.instance.openChat();
+  }
   
   Future<String> logOut(KustomerConfig kustomerConfig) async {
     return await KustomerNativePluginPlatform.instance.logOut(kustomerConfig);
-  }
-
-  Future<String> configure(String apiKey, String brandId, String phone, String email, String token, String? initialMessage, String conversationId) async {
-    return await KustomerNativePluginPlatform.instance.configure(apiKey, brandId, phone, email, token, initialMessage, conversationId);
   }
 }

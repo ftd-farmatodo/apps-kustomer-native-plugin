@@ -1,7 +1,4 @@
-import 'package:kustomer_native_plugin/model/conversation_input.dart';
-import 'package:kustomer_native_plugin/model/describe_customer.dart';
 import 'package:kustomer_native_plugin/model/kustomer_config.dart';
-import 'package:kustomer_native_plugin/model/user.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'kustomer_native_plugin_method_channel.dart';
@@ -27,19 +24,15 @@ abstract class KustomerNativePluginPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<bool> start(KustomerConfig config) {
+    throw UnimplementedError('configure() has not been implemented.');
   }
 
-  Future<String> start(KustomerConfig kustomerConfig, User user, ConversationInput? conversationInput, DescribeCustomer? describeCustomer) async {
-     throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<String> openChat() async {
+    throw UnimplementedError('platformVersion() has not been implemented.');
   }
   
   Future<String> logOut(KustomerConfig kustomerConfig) {
     throw UnimplementedError('platformVersion() has not been implemented.');
-  }
-
-  Future<String> configure(String apiKey, String brandId, String phone, String email, String token, String? initialMessage, String conversationId) {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
+  }  
 }

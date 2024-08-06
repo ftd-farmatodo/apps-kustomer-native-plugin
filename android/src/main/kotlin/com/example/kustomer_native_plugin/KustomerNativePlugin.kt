@@ -66,16 +66,16 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        if (call.method == "getPlatformVersion") {
-            result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } else if (call.method == "init") {
+
+        if (call.method == "start") {
             val userMap = call.argument<String>(USERMAP)
             val kustomerConfigMap = call.argument<String>(KUSTOMERCONFIGMAP)
             val conversationInputData = call.argument<String>(CONVERSATIONINPUT)
             val describeCustomerData = call.argument<String>(DESCRIBECUSTOMER)
 
-            this.activity?.let {
+            //TODO: Unificar userMap y describeCustomerData
 
+            this.activity?.let {
                 val intent = Intent(it, MainActivity::class.java)
                 val bundle = Bundle()
                 bundle.putSerializable(USERMAP, userMap.toString())
@@ -89,6 +89,10 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(it.applicationContext, intent, null)
             }
+
+        } else if (call.method == "openChat") {
+
+            //TODO: Guiarse con KustomerNativePlugin.swift
 
         } else if (call.method == "logOut") {
             this.activity?.let {
