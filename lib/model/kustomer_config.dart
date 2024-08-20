@@ -1,5 +1,4 @@
-import 'package:kustomer_native_plugin/model/conversation_input.dart';
-import 'package:kustomer_native_plugin/model/kustomer_user.dart';
+import 'package:apps_kustomer_native_plugin/kustomer.dart';
 
 class KustomerConfig {
   String brandId;
