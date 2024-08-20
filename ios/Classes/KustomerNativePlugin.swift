@@ -78,6 +78,8 @@ extension KustomerNativePlugin {
     if let email = configuration.email, let token = configuration.token {
       logIn(email: email, token: token, result: result)
       describeCustomer(phone: configuration.phone, email: email)
+    } else {
+      result(false)
     }
   }
 
