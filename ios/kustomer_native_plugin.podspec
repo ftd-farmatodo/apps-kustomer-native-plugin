@@ -3,9 +3,9 @@
 # Run `pod lib lint kustomer_native_plugin.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'kustomer_native_plugin'
+  s.name             = 'apps_kustomer_native_plugin'
   s.version          = '0.0.1'
-  s.summary          = 'A new Flutter plugin project.'
+  s.summary          = 'SDK De flutter para integrar Kustomer'
   s.description      = <<-DESC
 A new Flutter plugin project.
                        DESC
