@@ -1,4 +1,4 @@
-import 'package:apps_kustomer_native_plugin/kustomer.dart';
+import 'package:kustomer_native_plugin/kustomer.dart';
 
 class KustomerConfig {
   String brandId;

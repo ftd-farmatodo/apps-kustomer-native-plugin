@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:apps_kustomer_native_plugin/kustomer.dart';
+import 'package:kustomer_native_plugin/kustomer.dart';
 import 'dart:async';
 
 void main() {
