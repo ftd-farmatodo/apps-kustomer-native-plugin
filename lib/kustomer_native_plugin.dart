@@ -10,15 +10,15 @@ import 'kustomer_native_plugin_platform_interface.dart';
 
 class Kustomer {
 
-  Future<bool> start(KustomerConfig config) async {
+  static Future<bool> start(KustomerConfig config) async {
     return await KustomerNativePluginPlatform.instance.start(config);
   }
 
-  Future<String?> openChat() async {
+  static Future<String?> openChat() async {
     return await KustomerNativePluginPlatform.instance.openChat();
   }
   
-  Future<String> logOut(KustomerConfig kustomerConfig) async {
+  static Future<String> logOut(KustomerConfig kustomerConfig) async {
     return await KustomerNativePluginPlatform.instance.logOut(kustomerConfig);
   }
 }

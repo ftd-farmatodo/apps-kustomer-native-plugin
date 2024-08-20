@@ -17,7 +17,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final kustomer = Kustomer();
 
   //TODO: Para sacar el token de KustomerUser -> user.token se debe llamar la siguiente API.
 
@@ -65,8 +64,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    final logged = await kustomer.start(_kustomerConfig);
-    print(logged);
+    await Kustomer.start(_kustomerConfig);
   }
 
   @override
@@ -81,13 +79,13 @@ class _MyAppState extends State<MyApp> {
           children: [
             TextButton(
               onPressed: () async {
-                await kustomer.openChat();
+                await Kustomer.openChat();
               },
               child: const Text('Open Chat'),
             ),
             TextButton(
               onPressed: () async {
-                await kustomer.logOut(_kustomerConfig);
+                await Kustomer.logOut(_kustomerConfig);
               },
               child: const Text('Log Out'),
             )
