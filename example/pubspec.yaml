@@ -17,7 +17,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  kustomer_native_plugin:
+  apps_kustomer_native_plugin:
     # When depending on this package from a real application you should use:
     #   kustomer_native_plugin: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints

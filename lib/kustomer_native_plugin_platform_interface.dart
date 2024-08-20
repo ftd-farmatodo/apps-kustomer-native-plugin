@@ -1,7 +1,5 @@
-import 'package:kustomer_native_plugin/model/kustomer_config.dart';
+import 'package:apps_kustomer_native_plugin/kustomer.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
-import 'kustomer_native_plugin_method_channel.dart';
 
 abstract class KustomerNativePluginPlatform extends PlatformInterface {
   /// Constructs a KustomerNativePluginPlatform.
