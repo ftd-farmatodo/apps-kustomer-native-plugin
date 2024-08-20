@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:apps_kustomer_native_plugin/kustomer.dart';
+import 'package:kustomer_native_plugin/kustomer.dart';
 
 /// An implementation of [KustomerNativePluginPlatform] that uses method channels.
 class MethodChannelKustomerNativePlugin extends KustomerNativePluginPlatform {
