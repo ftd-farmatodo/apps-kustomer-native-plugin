@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
 import com.google.firebase.messaging.FirebaseMessaging
@@ -74,9 +75,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
                 }
-                this.activity?.let {
-                    FirebaseApp.initializeApp(it)
-                }
+                startFirebase()
             }
 
             KustomerChannelMethods.OPEN_CHAT.value -> kustomerImpl?.openChat()
@@ -94,6 +93,18 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             kustomerImpl = KustomerImpl(it.application, kustomerConfig)
         }
         kustomerImpl?.startKustomer(result)
+    }
+
+    private fun startFirebase() {
+        val fcmAppName = "send-fcmProject"
+        val devOptions = FirebaseOptions.Builder()
+                .setProjectId("kustomer-test-project")
+                .setApplicationId("1:47727167142:android:355d19601234e7a7ec9667")
+                .setApiKey("AIzaSyBwKnUG5F_DzuVJdP-JKNI-g-hB-xqSw3c")//<==id from FCM project
+                //.setGcmSenderId("fcm-proj-sender-id")//<==id from FCM project
+                .build()
+
+        FirebaseApp.initializeApp(this.activity!!, devOptions, fcmAppName)
     }
 }
 
