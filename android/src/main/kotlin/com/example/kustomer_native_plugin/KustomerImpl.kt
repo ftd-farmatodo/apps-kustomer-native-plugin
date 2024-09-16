@@ -29,7 +29,7 @@ class KustomerImpl(private val application: Application, private val kustomerCon
     }
 
     private fun setup() {
-        val options = KustomerOptions.Builder().setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE").setBrandId(kustomerConfig.brandId).setUserLocale(Locale.getDefault()).hideNewConversationButton(false).setLogLevel(KusLogOptions.KusLogOptionErrors).hideHistoryNavigation(false).setLogLevel(KusLogOptions.KusLogOptionAll).build()
+        val options = KustomerOptions.Builder().setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE").setBrandId(kustomerConfig.brandId).setUserLocale(Locale.getDefault()).hideNewConversationButton(false).setLogLevel(KusLogOptions.KusLogOptionDebug).hideHistoryNavigation(false).build()
         Kustomer.init(application = application, apiKey = kustomerConfig.apiKey, options = options) {
             Kustomer.getInstance().registerDevice()
             Log.i("KUS_INIT", "Kustomer initialized ${it.dataOrNull}")
@@ -50,7 +50,6 @@ class KustomerImpl(private val application: Application, private val kustomerCon
 
     fun openChat() {
         Kustomer.getInstance().open(KusPreferredView.CHAT_HISTORY)
-        startFirebaseCloudMessaging()
         /*FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FIREBASE_KEY", "Fetching FCM registration token failed", task.exception)
@@ -65,38 +64,6 @@ class KustomerImpl(private val application: Application, private val kustomerCon
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(application, msg, Toast.LENGTH_SHORT).show()
         })*/
-    }
-
-    private fun startFirebaseCloudMessaging() {
-        val app = FirebaseApp.getInstance("send-fcmProject")
-        val firebaseMessaging = app.get(FirebaseMessaging::class.java) as FirebaseMessaging
-
-        Log.d("FIREBASE_KUSTOMER", "app.name: ${app.name}\n")
-
-        Log.d(
-                "+++",
-                "+++ FirebaseApp(send-fcmProject); app.isDefaultApp: ${app.isDefaultApp}\n" +
-                        "app.name: ${app.name}\n" +
-                        "app.options.applicationId: ${app.options.applicationId}\n" +
-                        "app.options.apiKey: ${app.options.apiKey}\n" +
-                        "app.options.projectId: ${app.options.projectId}\n" +
-                        "app.options.gcmSenderId: ${app.options.gcmSenderId}"
-        )
-
-        firebaseMessaging.token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FIREBASE_KEY", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
-            val msg = "msg_token_fmt, $token"
-            Log.d("FIREBASE_KEY", msg)
-            Toast.makeText(application, msg, Toast.LENGTH_SHORT).show()
-        })
     }
 
     fun startNewConversation() {
