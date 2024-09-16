@@ -2,7 +2,10 @@ package com.example.kustomer_native_plugin
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kustomer.core.models.KusInitialMessage
 import com.kustomer.ui.Kustomer
 
@@ -28,6 +31,7 @@ class KustomerImpl(private val application: Application, private val kustomerCon
     private fun setup() {
         val options = KustomerOptions.Builder().setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE").setBrandId(kustomerConfig.brandId).setUserLocale(Locale.getDefault()).hideNewConversationButton(false).setLogLevel(KusLogOptions.KusLogOptionErrors).hideHistoryNavigation(false).setLogLevel(KusLogOptions.KusLogOptionAll).build()
         Kustomer.init(application = application, apiKey = kustomerConfig.apiKey, options = options) {
+            Kustomer.getInstance().registerDevice()
             Log.i("KUS_INIT", "Kustomer initialized ${it.dataOrNull}")
         }
     }
@@ -46,6 +50,20 @@ class KustomerImpl(private val application: Application, private val kustomerCon
 
     fun openChat() {
         Kustomer.getInstance().open(KusPreferredView.CHAT_HISTORY)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FIREBASE_KEY", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+            val msg = "msg_token_fmt, $token"
+            Log.d("FIREBASE_KEY", msg)
+            Toast.makeText(application, msg, Toast.LENGTH_SHORT).show()
+        })
     }
 
     fun startNewConversation() {

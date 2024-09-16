@@ -4,6 +4,13 @@ package com.example.kustomer_native_plugin
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.FirebaseApp
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
+import com.google.firebase.messaging.FirebaseMessaging
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -66,6 +73,9 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                 arguments?.let { args ->
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
+                }
+                this.activity?.let {
+                    FirebaseApp.initializeApp(it)
                 }
             }
 

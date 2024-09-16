@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "47727167142",
+    "project_id": "kustomer-test-project",
+    "storage_bucket": "kustomer-test-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47727167142:android:355d19601234e7a7ec9667",
+        "android_client_info": {
+          "package_name": "com.example.kustomer_native_plugin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwKnUG5F_DzuVJdP-JKNI-g-hB-xqSw3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
