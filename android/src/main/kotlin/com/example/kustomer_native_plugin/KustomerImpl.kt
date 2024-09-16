@@ -71,6 +71,8 @@ class KustomerImpl(private val application: Application, private val kustomerCon
         val app = FirebaseApp.getInstance("send-fcmProject")
         val firebaseMessaging = app.get(FirebaseMessaging::class.java) as FirebaseMessaging
 
+        Log.d("FIREBASE_KUSTOMER", "app.name: ${app.name}\n")
+
         Log.d(
                 "+++",
                 "+++ FirebaseApp(send-fcmProject); app.isDefaultApp: ${app.isDefaultApp}\n" +
