@@ -2,11 +2,7 @@ package com.example.kustomer_native_plugin
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.FirebaseApp
-import com.google.firebase.messaging.FirebaseMessaging
 import com.kustomer.core.models.KusInitialMessage
 import com.kustomer.core.models.KusPreferredView
 import com.kustomer.core.models.KusResult
@@ -18,6 +14,7 @@ import com.kustomer.core.utils.log.KusLogOptions
 import com.kustomer.ui.Kustomer
 import com.kustomer.ui.KustomerOptions
 import io.flutter.plugin.common.MethodChannel.Result
+import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
 class KustomerImpl(private val application: Application, private val kustomerConfig: KustomerConfig) : ViewModel() {
@@ -36,6 +33,14 @@ class KustomerImpl(private val application: Application, private val kustomerCon
         }
     }
 
+    fun registerDevice(fcmToken: String) {
+
+        runBlocking {
+            val result = Kustomer.getInstance().registerDeviceToken(fcmToken)
+            Log.d("KUSTOMER_TEST", "Kustomer registered $result")
+        }
+    }
+
     private fun login(result: Result) {
         if (kustomerConfig.token != null && kustomerConfig.email != null && isLogged(kustomerConfig.email) == false) {
             Kustomer.getInstance().logIn(kustomerConfig.token) {
@@ -50,20 +55,6 @@ class KustomerImpl(private val application: Application, private val kustomerCon
 
     fun openChat() {
         Kustomer.getInstance().open(KusPreferredView.CHAT_HISTORY)
-        /*FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FIREBASE_KEY", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
-            val msg = "msg_token_fmt, $token"
-            Log.d("FIREBASE_KEY", msg)
-            Toast.makeText(application, msg, Toast.LENGTH_SHORT).show()
-        })*/
     }
 
     fun startNewConversation() {

@@ -9,8 +9,6 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.initialize
 import com.google.firebase.messaging.FirebaseMessaging
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -100,8 +98,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         val devOptions = FirebaseOptions.Builder()
                 .setProjectId("kustomer-test-project")
                 .setApplicationId("1:47727167142:android:355d19601234e7a7ec9667")
-                .setApiKey("AIzaSyBwKnUG5F_DzuVJdP-JKNI-g-hB-xqSw3c")//<==id from FCM project
-                //.setGcmSenderId("fcm-proj-sender-id")//<==id from FCM project
+                .setApiKey("AIzaSyBwKnUG5F_DzuVJdP-JKNI-g-hB-xqSw3c")
                 .build()
 
         FirebaseApp.initializeApp(this.activity!!, devOptions, fcmAppName)
@@ -112,18 +109,6 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         val app = FirebaseApp.getInstance("send-fcmProject")
         val firebaseMessaging = app.get(FirebaseMessaging::class.java) as FirebaseMessaging
 
-        Log.d("FIREBASE_KUSTOMER", "app.name: ${app.name}\n")
-
-        Log.d(
-                "+++",
-                "+++ FirebaseApp(send-fcmProject); app.isDefaultApp: ${app.isDefaultApp}\n" +
-                        "app.name: ${app.name}\n" +
-                        "app.options.applicationId: ${app.options.applicationId}\n" +
-                        "app.options.apiKey: ${app.options.apiKey}\n" +
-                        "app.options.projectId: ${app.options.projectId}\n" +
-                        "app.options.gcmSenderId: ${app.options.gcmSenderId}"
-        )
-
         firebaseMessaging.token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FIREBASE_KEY", "Fetching FCM registration token failed", task.exception)
@@ -132,6 +117,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
 
             // Get new FCM registration token
             val token = task.result
+            kustomerImpl?.registerDevice(token)
 
             // Log and toast
             val msg = "msg_token_fmt, $token"
