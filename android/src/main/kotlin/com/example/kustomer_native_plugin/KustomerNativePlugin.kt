@@ -120,7 +120,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             kustomerImpl?.registerDevice(token)
 
             // Log and toast
-            val msg = "V1 - msg_token_fmt, $token"
+            val msg = "V2 - msg_token_fmt, $token"
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
         })
