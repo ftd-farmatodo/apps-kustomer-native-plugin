@@ -105,8 +105,8 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     private fun startFirebaseCloudMessaging() {
-        val app = FirebaseApp.getInstance("send-fcmProject")
-        val firebaseMessaging = app.get(FirebaseMessaging::class.java) as FirebaseMessaging
+        //val app = FirebaseApp.getInstance("send-fcmProject")
+        //val firebaseMessaging = app.get(FirebaseMessaging::class.java) as FirebaseMessaging
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -119,7 +119,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             kustomerImpl?.registerDevice(token)
 
             // Log and toast
-            val msg = "V4 - msg_token_fmt, $token"
+            val msg = "V5 - msg_token_fmt, $token"
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
         })
