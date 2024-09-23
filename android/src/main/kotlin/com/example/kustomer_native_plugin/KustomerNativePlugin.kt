@@ -73,7 +73,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
                 }
-                //startFirebase()
+                startFirebaseCloudMessaging()
             }
 
             KustomerChannelMethods.OPEN_CHAT.value -> kustomerImpl?.openChat()
@@ -102,7 +102,6 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                 .build()
 
         FirebaseApp.initializeApp(this.activity!!, devOptions, fcmAppName)
-        startFirebaseCloudMessaging()
     }
 
     private fun startFirebaseCloudMessaging() {
@@ -120,7 +119,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             kustomerImpl?.registerDevice(token)
 
             // Log and toast
-            val msg = "V3 - msg_token_fmt, $token"
+            val msg = "V4 - msg_token_fmt, $token"
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
         })
