@@ -73,7 +73,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
                 }
-                startFirebase()
+                //startFirebase()
             }
 
             KustomerChannelMethods.OPEN_CHAT.value -> kustomerImpl?.openChat()
@@ -109,7 +109,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         val app = FirebaseApp.getInstance("send-fcmProject")
         val firebaseMessaging = app.get(FirebaseMessaging::class.java) as FirebaseMessaging
 
-        firebaseMessaging.token.addOnCompleteListener(OnCompleteListener { task ->
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FIREBASE_KEY", "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
@@ -120,7 +120,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             kustomerImpl?.registerDevice(token)
 
             // Log and toast
-            val msg = "V2 - msg_token_fmt, $token"
+            val msg = "V3 - msg_token_fmt, $token"
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
         })

@@ -10,4 +10,8 @@ class FCMService : FirebaseMessagingService() {
         super.onMessageReceived(message)
         KusNotificationService.onMessageReceived(remoteMessage = message, context = this)
     }
+
+    override fun onNewToken(token: String) {
+        super.onNewToken(token)
+    }
 }
