@@ -72,6 +72,7 @@ extension KustomerNativePlugin {
     options.brandId = configuration.brandId
     options.activeAssistant = .orgDefault
     options.hideNewConversationButtonInClosedChat = false
+    options.pushEnvironment = .development
 
     Kustomer.configure(apiKey: configuration.apiKey, options: options, launchOptions: nil)
 
