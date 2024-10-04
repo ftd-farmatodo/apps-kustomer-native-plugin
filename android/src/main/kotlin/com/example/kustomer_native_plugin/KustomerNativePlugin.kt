@@ -73,6 +73,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
                 }
+                startFirebase()
                 startFirebaseCloudMessaging()
             }
 
@@ -119,7 +120,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
             kustomerImpl?.registerDevice(token)
 
             // Log and toast
-            val msg = "V5 - msg_token_fmt, $token"
+            val msg = "V6 - msg_token_fmt, $token"
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
         })

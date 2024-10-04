@@ -14,19 +14,35 @@ import com.kustomer.core.utils.log.KusLogOptions
 import com.kustomer.ui.Kustomer
 import com.kustomer.ui.KustomerOptions
 import io.flutter.plugin.common.MethodChannel.Result
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
 class KustomerImpl(private val application: Application, private val kustomerConfig: KustomerConfig) : ViewModel() {
 
+    private lateinit var customCoroutineScope: CoroutineScope
+
     fun startKustomer(result: Result) {
+        customCoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
         setup()
         login(result)
         describeCustomer()
     }
 
     private fun setup() {
-        val options = KustomerOptions.Builder().setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE").setBrandId(kustomerConfig.brandId).setUserLocale(Locale.getDefault()).hideNewConversationButton(false).setLogLevel(KusLogOptions.KusLogOptionDebug).hideHistoryNavigation(false).build()
+        val options = KustomerOptions.Builder()
+                .setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE")
+                .setBrandId(kustomerConfig.brandId)
+                .setUserLocale(Locale.getDefault())
+                .hideNewConversationButton(false)
+                .setLogLevel(KusLogOptions.KusLogOptionErrors)
+                .hideHistoryNavigation(false)
+                .setLogLevel(KusLogOptions.KusLogOptionAll)
+                .build()
         Kustomer.init(application = application, apiKey = kustomerConfig.apiKey, options = options) {
             Kustomer.getInstance().registerDevice()
             Log.i("KUS_INIT", "Kustomer initialized ${it.dataOrNull}")
@@ -34,8 +50,7 @@ class KustomerImpl(private val application: Application, private val kustomerCon
     }
 
     fun registerDevice(fcmToken: String) {
-
-        runBlocking {
+        customCoroutineScope.launch {
             val result = Kustomer.getInstance().registerDeviceToken(fcmToken)
             Log.d("KUSTOMER_TEST", "Kustomer registered $result")
         }
@@ -49,6 +64,9 @@ class KustomerImpl(private val application: Application, private val kustomerCon
                     is KusResult.Error -> result.success(false)
                     else -> {}
                 }
+            }
+            runBlocking {
+                Log.d("KUSTOMER_TEST","Deregistered: ${Kustomer.getInstance().deregisterDeviceForPushNotifications()}")
             }
         }
     }
@@ -120,5 +138,6 @@ class KustomerImpl(private val application: Application, private val kustomerCon
 
     fun logout() {
         Kustomer.getInstance().logOut()
+        customCoroutineScope.cancel()
     }
 }
