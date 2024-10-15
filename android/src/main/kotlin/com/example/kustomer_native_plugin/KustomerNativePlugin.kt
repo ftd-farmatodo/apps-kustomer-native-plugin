@@ -68,12 +68,13 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
 
         when (call.method) {
             KustomerChannelMethods.START.value -> {
-                val arguments = call.arguments as? Map<String, Any>
+                @Suppress("UNCHECKED_CAST")
+                val arguments = call.arguments as? Map<String, Any?>
                 arguments?.let { args ->
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
                 }
-                startFirebase()
+                //startFirebase()
                 startFirebaseCloudMessaging()
             }
 
@@ -117,10 +118,10 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
 
             // Get new FCM registration token
             val token = task.result
-            kustomerImpl?.registerDevice(token)
+            //kustomerImpl?.registerDevice(token)
 
             // Log and toast
-            val msg = "V6 - msg_token_fmt, $token"
+            val msg = "V7 - msg_token_fmt, $token"
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
         })

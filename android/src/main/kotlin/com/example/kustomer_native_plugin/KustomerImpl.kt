@@ -17,9 +17,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
 class KustomerImpl(private val application: Application, private val kustomerConfig: KustomerConfig) : ViewModel() {
@@ -64,9 +62,6 @@ class KustomerImpl(private val application: Application, private val kustomerCon
                     is KusResult.Error -> result.success(false)
                     else -> {}
                 }
-            }
-            runBlocking {
-                Log.d("KUSTOMER_TEST","Deregistered: ${Kustomer.getInstance().deregisterDeviceForPushNotifications()}")
             }
         }
     }
@@ -138,6 +133,5 @@ class KustomerImpl(private val application: Application, private val kustomerCon
 
     fun logout() {
         Kustomer.getInstance().logOut()
-        customCoroutineScope.cancel()
     }
 }
