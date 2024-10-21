@@ -118,10 +118,10 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
 
             // Get new FCM registration token
             val token = task.result
-            kustomerImpl?.registerDevice(token)
+            //kustomerImpl?.registerDevice(token)
 
             // Log and toast
-            val msg = "V8 - msg_token_fmt, $token"
+            val msg = "V9 - msg_token_fmt, $token"
             Log.d("FIREBASE_KEY", msg)
             Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
         })

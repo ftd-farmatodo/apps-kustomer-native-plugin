@@ -42,7 +42,7 @@ class KustomerImpl(private val application: Application, private val kustomerCon
                 .setLogLevel(KusLogOptions.KusLogOptionAll)
                 .build()
         Kustomer.init(application = application, apiKey = kustomerConfig.apiKey, options = options) {
-            //Kustomer.getInstance().registerDevice()
+            Kustomer.getInstance().registerDevice()
             Log.i("KUS_INIT", "Kustomer initialized ${it.dataOrNull}")
         }
     }
