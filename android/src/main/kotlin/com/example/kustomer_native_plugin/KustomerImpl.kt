@@ -14,18 +14,11 @@ import com.kustomer.core.utils.log.KusLogOptions
 import com.kustomer.ui.Kustomer
 import com.kustomer.ui.KustomerOptions
 import io.flutter.plugin.common.MethodChannel.Result
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import java.util.Locale
 
 class KustomerImpl(private val application: Application, private val kustomerConfig: KustomerConfig) : ViewModel() {
 
-    private lateinit var customCoroutineScope: CoroutineScope
-
     fun startKustomer(result: Result) {
-        customCoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
         setup()
         login(result)
         describeCustomer()
@@ -44,13 +37,6 @@ class KustomerImpl(private val application: Application, private val kustomerCon
         Kustomer.init(application = application, apiKey = kustomerConfig.apiKey, options = options) {
             Kustomer.getInstance().registerDevice()
             Log.i("KUS_INIT", "Kustomer initialized ${it.dataOrNull}")
-        }
-    }
-
-    fun registerDevice(fcmToken: String) {
-        customCoroutineScope.launch {
-            val result = Kustomer.getInstance().registerDeviceToken(fcmToken)
-            Log.d("KUSTOMER_TEST", "Kustomer registered $result")
         }
     }
 
