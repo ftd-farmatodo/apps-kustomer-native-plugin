@@ -10,7 +10,6 @@ import com.kustomer.core.models.chat.KusChatMessageDirection
 import com.kustomer.core.models.chat.KusCustomerDescribeAttributes
 import com.kustomer.core.models.chat.KusEmail
 import com.kustomer.core.models.chat.KusPhone
-import com.kustomer.core.utils.log.KusLogOptions
 import com.kustomer.ui.Kustomer
 import com.kustomer.ui.KustomerOptions
 import io.flutter.plugin.common.MethodChannel.Result
@@ -30,9 +29,7 @@ class KustomerImpl(private val application: Application, private val kustomerCon
                 .setBrandId(kustomerConfig.brandId)
                 .setUserLocale(Locale.getDefault())
                 .hideNewConversationButton(false)
-                .setLogLevel(KusLogOptions.KusLogOptionErrors)
                 .hideHistoryNavigation(false)
-                .setLogLevel(KusLogOptions.KusLogOptionAll)
                 .build()
         Kustomer.init(application = application, apiKey = kustomerConfig.apiKey, options = options) {
             Kustomer.getInstance().registerDevice()

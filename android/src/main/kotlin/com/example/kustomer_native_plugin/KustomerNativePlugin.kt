@@ -4,10 +4,6 @@ package com.example.kustomer_native_plugin
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -66,13 +62,11 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
 
         when (call.method) {
             KustomerChannelMethods.START.value -> {
-                @Suppress("UNCHECKED_CAST")
                 val arguments = call.arguments as? Map<String, Any?>
                 arguments?.let { args ->
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
                 }
-                //startFirebaseCloudMessaging()
             }
 
             KustomerChannelMethods.OPEN_CHAT.value -> kustomerImpl?.openChat()
@@ -92,23 +86,6 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         kustomerImpl?.startKustomer(result)
     }
 
-    private fun startFirebaseCloudMessaging() {
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FIREBASE_KEY", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-            //kustomerImpl?.registerDevice(token)
-
-            // Log and toast
-            val msg = "V9 - msg_token_fmt, $token"
-            Log.d("FIREBASE_KEY", msg)
-            Toast.makeText(this.activity, msg, Toast.LENGTH_SHORT).show()
-        })
-    }
 }
 
 enum class KustomerChannelMethods(val value: String) {
