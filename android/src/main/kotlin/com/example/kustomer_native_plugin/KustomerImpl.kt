@@ -4,15 +4,13 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.kustomer.core.models.KusInitialMessage
-import com.kustomer.ui.Kustomer
-
 import com.kustomer.core.models.KusPreferredView
 import com.kustomer.core.models.KusResult
 import com.kustomer.core.models.chat.KusChatMessageDirection
 import com.kustomer.core.models.chat.KusCustomerDescribeAttributes
 import com.kustomer.core.models.chat.KusEmail
 import com.kustomer.core.models.chat.KusPhone
-import com.kustomer.core.utils.log.KusLogOptions
+import com.kustomer.ui.Kustomer
 import com.kustomer.ui.KustomerOptions
 import io.flutter.plugin.common.MethodChannel.Result
 import java.util.Locale
@@ -26,8 +24,15 @@ class KustomerImpl(private val application: Application, private val kustomerCon
     }
 
     private fun setup() {
-        val options = KustomerOptions.Builder().setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE").setBrandId(kustomerConfig.brandId).setUserLocale(Locale.getDefault()).hideNewConversationButton(false).setLogLevel(KusLogOptions.KusLogOptionErrors).hideHistoryNavigation(false).setLogLevel(KusLogOptions.KusLogOptionAll).build()
+        val options = KustomerOptions.Builder()
+                .setBusinessScheduleId("CUSTOM_BUSINESS_SCHEDULE")
+                .setBrandId(kustomerConfig.brandId)
+                .setUserLocale(Locale.getDefault())
+                .hideNewConversationButton(false)
+                .hideHistoryNavigation(false)
+                .build()
         Kustomer.init(application = application, apiKey = kustomerConfig.apiKey, options = options) {
+            Kustomer.getInstance().registerDevice()
             Log.i("KUS_INIT", "Kustomer initialized ${it.dataOrNull}")
         }
     }
@@ -94,7 +99,8 @@ class KustomerImpl(private val application: Application, private val kustomerCon
 
     private fun describeConversation(conversationId: String) {
         val attributes: Map<String, Any> =
-                mapOf("phone" to (kustomerConfig.phone ?: ""), "email" to (kustomerConfig.email ?: ""))
+                mapOf("phone" to (kustomerConfig.phone ?: ""), "email" to (kustomerConfig.email
+                        ?: ""))
         Kustomer.getInstance().describeConversation(conversationId, attributes) {
             when (it) {
                 is KusResult.Success -> Log.i("KUS_DES_CONVERSATION",

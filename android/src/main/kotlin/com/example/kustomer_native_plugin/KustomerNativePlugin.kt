@@ -59,10 +59,9 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-
         when (call.method) {
             KustomerChannelMethods.START.value -> {
-                val arguments = call.arguments as? Map<String, Any>
+                val arguments = call.arguments as? Map<String, Any?>
                 arguments?.let { args ->
                     val kustomerConfig = KustomerConfig.fromMap(args)
                     startKustomer(kustomerConfig, result)
@@ -85,6 +84,7 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
         }
         kustomerImpl?.startKustomer(result)
     }
+
 }
 
 enum class KustomerChannelMethods(val value: String) {

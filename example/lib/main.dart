@@ -14,7 +14,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   //TODO: Para sacar el token de KustomerUser -> user.token se debe llamar la siguiente API.
 
 /*
@@ -42,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTAwZmRlY2U5MjBiYjUxM2M3ODQ4MCIsInVzZXIiOiI2NmEwMGZkZGVlNmQzYTNkY2I5YWVkZGEiLCJvcmciOiI2NTIzZmZlNjU5MWU4NjM0MGI2N2RkYjEiLCJvcmdOYW1lIjoiZmFybWF0b2RvIiwidXNlclR5cGUiOiJtYWNoaW5lIiwicG9kIjoicHJvZDEiLCJyb2xlcyI6WyJvcmcudHJhY2tpbmciXSwiYXVkIjoidXJuOmNvbnN1bWVyIiwiaXNzIjoidXJuOmFwaSIsInN1YiI6IjY2YTAwZmRkZWU2ZDNhM2RjYjlhZWRkYSJ9.jO2AjreNGkGWV2pdvNsxHLkbzGZtynjdfsYvnip6WHc", // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2YTAwZmRlY2U5MjBiYjUxM2M3ODQ4MCIsInVzZXIiOiI2NmEwMGZkZGVlNmQzYTNkY2I5YWVkZGEiLCJvcmciOiI2NTIzZmZlNjU5MWU4NjM0MGI2N2RkYjEiLCJvcmdOYW1lIjoiZmFybWF0b2RvIiwidXNlclR5cGUiOiJtYWNoaW5lIiwicG9kIjoicHJvZDEiLCJyb2xlcyI6WyJvcmcudHJhY2tpbmciXSwiYXVkIjoidXJuOmNvbnN1bWVyIiwiaXNzIjoidXJuOmFwaSIsInN1YiI6IjY2YTAwZmRkZWU2ZDNhM2RjYjlhZWRkYSJ9.jO2AjreNGkGWV2pdvNsxHLkbzGZtynjdfsYvnip6WHc",
     user: KustomerUser(
       token:
-          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHRlcm5hbElkIjoiMjY4MjI2IiwiaWF0IjoxNzIyODg5NDg0LCJlbWFpbCI6ImRpZWdvZmNhLjA4QGdtYWlsLmNvbSJ9.InqUcYmkXYTKIKw55DdQiR_K3KYXZCF4motzs9g9wAk",
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHRlcm5hbElkIjoiMjY4MjI2IiwiaWF0IjoxNzI5MDA2NzcyLCJlbWFpbCI6ImRpZWdvZmNhLjA4QGdtYWlsLmNvbSJ9.xdsL6vKNmlM_dkcbzFpT5a2mfH9nIFEaUmuearu6r-4",
       email: "diegofca.08@gmail.com",
       phone: '573114742370',
     ),

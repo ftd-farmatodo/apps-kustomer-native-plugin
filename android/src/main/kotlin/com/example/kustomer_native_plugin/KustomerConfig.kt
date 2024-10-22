@@ -9,7 +9,7 @@ data class KustomerConfig(
         val token: String?,
 ) {
     companion object {
-        fun fromMap(map: Map<String, Any>) = object {
+        fun fromMap(map: Map<String, Any?>) = object {
             val apiKey by map
             val brandId by map
             val email by map
