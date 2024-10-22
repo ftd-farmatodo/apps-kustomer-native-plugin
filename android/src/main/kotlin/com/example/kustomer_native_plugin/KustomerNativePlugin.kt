@@ -59,7 +59,6 @@ class KustomerNativePlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-
         when (call.method) {
             KustomerChannelMethods.START.value -> {
                 val arguments = call.arguments as? Map<String, Any?>
